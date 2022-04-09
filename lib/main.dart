@@ -26,8 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegistrationScreen(),
-      // home: currentUser == null ? LoginScreen() : MainPage(),
+      home: currentUser == null ? LoginScreen() : MainPage(),
     );
   }
 }
