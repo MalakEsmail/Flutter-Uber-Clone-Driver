@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:driver/brand_colors.dart';
 import 'package:driver/global_variables.dart';
+import 'package:driver/helpers/push_notifications_service.dart';
 import 'package:driver/widgets/TaxiOutlineButton.dart';
 import 'package:driver/widgets/availability_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,12 +21,28 @@ class _HomeTabState extends State<HomeTab> {
   Completer<GoogleMapController> _controller = Completer();
   GoogleMapController? googleMapController;
   Position? currentPosition;
+  User? user;
   void getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     currentPosition = position;
     LatLng pos = LatLng(position.latitude, position.longitude);
     googleMapController!.animateCamera(CameraUpdate.newLatLng(pos));
+  }
+
+  void getCurrentUserInfo() async {
+    user = FirebaseAuth.instance.currentUser;
+    PushNotificationsService pushNotificationsService =
+        PushNotificationsService();
+    pushNotificationsService.initialize();
+    pushNotificationsService.getToken();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    getCurrentUserInfo();
   }
 
   @override

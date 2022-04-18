@@ -119,6 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("No Internet Connection !")));
                         }
+                        /*
+                        * email :loka@gmail.com
+                        * password:123456789
+                        * */
                         loginUser();
                       },
                       child: Container(
